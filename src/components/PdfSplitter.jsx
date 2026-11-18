@@ -155,7 +155,7 @@ function PdfSplitter() {
         return s || null;
     }
 
-    // Builds "[Area] Feeder Plans - [ID]". "/" in the ID is swapped out
+    // Builds "[Area] Feeder - TX [ID]". "/" in the ID is swapped out
     // because it isn't allowed in filenames.
     function buildFeederPlanFilename(area, id) {
         if (!id) return null;
@@ -300,7 +300,7 @@ function PdfSplitter() {
             }
 
             const parsedFilename = buildFeederPlanFilename(area, idResult.id);
-            const baseFilename = parsedFilename || sanitizeFilename(`${area} Feeder Plans - Document ${chunkNumber}`) || `Document ${chunkNumber}`;
+            const baseFilename = parsedFilename || sanitizeFilename(`${area} Feeder - Document ${chunkNumber}`) || `Document ${chunkNumber}`;
             let filename = baseFilename;
             for (let copy = 2; usedFilenames.has(filename.toLowerCase()); copy++) {
                 filename = `${baseFilename} (${copy})`;
@@ -640,7 +640,7 @@ function PdfSplitter() {
                         />
                     </label>
                     <p style={{ margin: '6px 0 0', color: '#666', fontSize: '13px' }}>
-                        Files save as "{splitArea.trim() || "[Area]"} Feeder Plans - [ID]"
+                        Files save as "{splitArea.trim() || "[Area]"} Feeder - TX [ID]"
                     </p>
                     <br />
                     <button onClick={splitPdf} disabled={isSplitting}>
