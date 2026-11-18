@@ -159,7 +159,7 @@ function PdfSplitter() {
     // because it isn't allowed in filenames.
     function buildFeederPlanFilename(area, id) {
         if (!id) return null;
-        return sanitizeFilename(`${area} Feeder Plans - ${id.replace(/\//g, SLASH_REPLACEMENT)}`);
+        return sanitizeFilename(`${area} Feeder - TX ${id.replace(/\//g, SLASH_REPLACEMENT)}`);
     }
 
     function downloadBlob(bytes, filename) {
