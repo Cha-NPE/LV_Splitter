@@ -199,7 +199,9 @@ function PdfSplitter() {
 
     // Save bytes to the provided folderHandle when available, otherwise
     // prompt the user for a folder once (when savePdf is called without a handle).
-    async function savePdf(bytes, filename, folderHandle = null) {
+    // Pass `subfolderName` to save inside a subfolder of the chosen folder
+    // (created if it doesn't exist).
+    async function savePdf(bytes, filename, folderHandle = null, subfolderName = null) {
         let useDirectorySave = false;
         let handle = folderHandle;
 
@@ -212,7 +214,10 @@ function PdfSplitter() {
 
         if (useDirectorySave) {
             try {
-                const fileHandle = await handle.getFileHandle(`${filename}.pdf`, { create: true });
+                const targetHandle = subfolderName
+                    ? await handle.getDirectoryHandle(subfolderName, { create: true })
+                    : handle;
+                const fileHandle = await targetHandle.getFileHandle(`${filename}.pdf`, { create: true });
                 const writable = await fileHandle.createWritable();
                 await writable.write(bytes);
                 await writable.close();
@@ -317,10 +322,12 @@ function PdfSplitter() {
 
             try {
                 if (folderHandle) {
-                    await savePdf(outputBytes, filename, folderHandle);
+                    // Each file goes in its own folder with the same name.
+                    await savePdf(outputBytes, filename, folderHandle, filename);
                 }
                 else {
-                    // user didn't choose a folder (or permission denied) — download
+                    // user didn't choose a folder (or permission denied) — download.
+                    // Browsers can't create folders for downloads, so these land loose.
                     downloadBlob(outputBytes, filename);
                 }
 
