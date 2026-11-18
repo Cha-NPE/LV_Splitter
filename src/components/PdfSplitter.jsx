@@ -317,7 +317,7 @@ function PdfSplitter() {
 
     return (
         <>
-            <h2>PDF Splitter</h2>
+            <h2>LV Plans Splitter</h2>
 
             <section style={{ marginBottom: '20px' }}>
                 <input type="file" accept=".pdf" ref={splitInputRef} />
