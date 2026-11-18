@@ -287,12 +287,10 @@ function PdfSplitter() {
 
             try {
                 if (folderHandle) {
-                    // Each file goes in its own folder with the same name.
-                    await savePdf(outputBytes, filename, folderHandle, filename);
+                    await savePdf(outputBytes, filename, folderHandle);
                 }
                 else {
-                    // user didn't choose a folder (or permission denied) — download.
-                    // Browsers can't create folders for downloads, so these land loose.
+                    // user didn't choose a folder (or permission denied) — download
                     downloadBlob(outputBytes, filename);
                 }
 
@@ -317,7 +315,7 @@ function PdfSplitter() {
 
     return (
         <>
-            <h2>LV Plans Splitter</h2>
+            <h2>PDF Splitter</h2>
 
             <section style={{ marginBottom: '20px' }}>
                 <input type="file" accept=".pdf" ref={splitInputRef} />
